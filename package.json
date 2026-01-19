@@ -1,7 +1,7 @@
 {
   "name": "antd-country-phone-picker",
   "version": "1.0.0",
-  "description": "A production-ready phone input component for Ant Design with country selection, protected dial codes, and automatic validation",
+  "description": "A production-ready phone input component for Ant Design with country selection, protected dial codes, and automatic validation. Native feel, TypeScript support, SSR-safe.",
   "keywords": [
     "react",
     "antd",
@@ -15,7 +15,10 @@
     "phone-number",
     "input",
     "form",
-    "typescript"
+    "typescript",
+    "country-picker",
+    "phone-validation",
+    "react-component"
   ],
   "homepage": "https://github.com/user/antd-country-phone-picker#readme",
   "bugs": {
@@ -39,7 +42,7 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/index.css"
   },
   "files": [
     "dist",
@@ -71,9 +74,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "antd": "^5.29.2",
+    "esbuild-plugin-css-modules": "^0.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.3",
     "next": "16.1.3",
+    "postcss": "^8.5.6",
+    "postcss-modules": "^6.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tailwindcss": "^4",

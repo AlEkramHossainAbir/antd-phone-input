@@ -1,0 +1,45 @@
+# Development files
+.next/
+.git/
+.gitignore
+node_modules/
+
+# Source files (we ship dist only)
+src/
+components/
+app/
+data/
+public/
+
+# Config files
+tsconfig.json
+tsup.config.ts
+next.config.ts
+next-env.d.ts
+eslint.config.mjs
+postcss.config.mjs
+tailwind.config.ts
+
+# Development dependencies
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+*.test.*
+*.spec.*
+__tests__/
+__mocks__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

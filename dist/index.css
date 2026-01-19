@@ -1,0 +1,164 @@
+/* src/CountryPhoneInput.module.css */
+.wrapper {
+  display: inline-block;
+  width: 100%;
+}
+.inputGroup {
+  width: 100%;
+}
+.sizeSmall .countrySelect {
+  width: 70px;
+  min-width: 70px;
+}
+.sizeMiddle .countrySelect {
+  width: 80px;
+  min-width: 80px;
+}
+.sizeLarge .countrySelect {
+  width: 90px;
+  min-width: 90px;
+}
+.countrySelect {
+  flex-shrink: 0;
+}
+.countrySelect :global(.ant-select-selector) {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.countrySelect :global(.ant-select-selection-item) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+.arrowIcon {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.45);
+  transition: color 0.2s;
+}
+.countrySelect:hover .arrowIcon {
+  color: rgba(0, 0, 0, 0.65);
+}
+.phoneInput {
+  flex: 1;
+}
+.flagImage {
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.flagEmoji {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+.countryOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+  width: 100%;
+}
+.countryName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+.dialCode {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+.selectedCountry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.disabled .phoneInput,
+.disabled .countrySelect {
+  pointer-events: none;
+}
+.readOnly .countrySelect {
+  pointer-events: none;
+}
+.readOnly .countrySelect :global(.ant-select-arrow) {
+  display: none;
+}
+.error .countrySelect :global(.ant-select-selector),
+.error .phoneInput {
+  border-color: #ff4d4f !important;
+}
+.error .countrySelect:hover :global(.ant-select-selector),
+.error .phoneInput:hover {
+  border-color: #ff7875 !important;
+}
+.error .countrySelect:global(.ant-select-focused) :global(.ant-select-selector),
+.error .phoneInput:focus {
+  border-color: #ff4d4f !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.1) !important;
+}
+.warning .countrySelect :global(.ant-select-selector),
+.warning .phoneInput {
+  border-color: #faad14 !important;
+}
+.warning .countrySelect:hover :global(.ant-select-selector),
+.warning .phoneInput:hover {
+  border-color: #ffc53d !important;
+}
+.warning .countrySelect:global(.ant-select-focused) :global(.ant-select-selector),
+.warning .phoneInput:focus {
+  border-color: #faad14 !important;
+  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.1) !important;
+}
+:global(.ant-theme-dark) .countryName,
+:global([data-theme=dark]) .countryName {
+  color: rgba(255, 255, 255, 0.88);
+}
+:global(.ant-theme-dark) .dialCode,
+:global([data-theme=dark]) .dialCode {
+  color: rgba(255, 255, 255, 0.45);
+}
+:global(.ant-theme-dark) .arrowIcon,
+:global([data-theme=dark]) .arrowIcon {
+  color: rgba(255, 255, 255, 0.45);
+}
+:global(.ant-theme-dark) .countrySelect:hover .arrowIcon,
+:global([data-theme=dark]) .countrySelect:hover .arrowIcon {
+  color: rgba(255, 255, 255, 0.65);
+}
+@media (max-width: 480px) {
+  .sizeSmall .countrySelect,
+  .sizeMiddle .countrySelect,
+  .sizeLarge .countrySelect {
+    width: 65px;
+    min-width: 65px;
+  }
+  .countryOption {
+    gap: 8px;
+  }
+  .countryName {
+    font-size: 13px;
+  }
+  .dialCode {
+    font-size: 12px;
+  }
+}
+:global([dir=rtl]) .countryOption {
+  flex-direction: row-reverse;
+}
+:global([dir=rtl]) .dialCode {
+  margin-right: auto;
+  margin-left: 0;
+}
+/*# sourceMappingURL=index.css.map */
