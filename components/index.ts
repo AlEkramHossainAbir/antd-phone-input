@@ -1,4 +1,6 @@
-export { CountryPhoneInput, default as CountryPhoneInputDefault } from './CountryPhoneInput';
-export { CountrySelect, CountryOption, CountryLabel } from './CountrySelect';
-export { PhoneInput } from './PhoneInput';
-export { Flag } from './Flag';
+/**
+ * Components Export
+ * Central export point for all components
+ */
+
+export * from './CountryPhoneInput';
