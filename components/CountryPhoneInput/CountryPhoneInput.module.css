@@ -43,6 +43,7 @@
 
 .countrySelect {
   flex-shrink: 0;
+  position: relative;
 }
 
 .countrySelect :global(.ant-select-selector) {
@@ -73,6 +74,53 @@
 
 .phoneInput {
   flex: 1;
+}
+
+/* Visual Unification - Remove inner border between Select and Input */
+.inputGroup :global(.ant-select-selector) {
+  border-right-width: 0 !important;
+}
+
+.inputGroup .phoneInput {
+  border-left-width: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Add pseudo-element divider for subtle separation */
+.inputGroup .countrySelect::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Focus state - unified outline */
+.inputGroup:focus-within {
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.inputGroup:focus-within :global(.ant-select-selector),
+.inputGroup:focus-within .phoneInput {
+  border-color: #1677ff !important;
+}
+
+.inputGroup:focus-within .countrySelect::after {
+  background-color: rgba(22, 119, 255, 0.3);
+}
+
+/* Hover state - unified */
+.inputGroup:hover :global(.ant-select-selector),
+.inputGroup:hover .phoneInput {
+  border-color: #4096ff !important;
+}
+
+.inputGroup:hover .countrySelect::after {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -163,6 +211,14 @@
   border-color: #ff4d4f !important;
 }
 
+.error .countrySelect::after {
+  background-color: rgba(255, 77, 79, 0.3) !important;
+}
+
+.error .inputGroup:focus-within {
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.1);
+}
+
 .error .countrySelect:hover :global(.ant-select-selector),
 .error .phoneInput:hover {
   border-color: #ff7875 !important;
@@ -177,6 +233,14 @@
 .warning .countrySelect :global(.ant-select-selector),
 .warning .phoneInput {
   border-color: #faad14 !important;
+}
+
+.warning .countrySelect::after {
+  background-color: rgba(250, 173, 20, 0.3) !important;
+}
+
+.warning .inputGroup:focus-within {
+  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.1);
 }
 
 .warning .countrySelect:hover :global(.ant-select-selector),
@@ -212,6 +276,16 @@
 :global(.ant-theme-dark) .countrySelect:hover .arrowIcon,
 :global([data-theme="dark"]) .countrySelect:hover .arrowIcon {
   color: rgba(255, 255, 255, 0.65);
+}
+
+:global(.ant-theme-dark) .countrySelect::after,
+:global([data-theme="dark"]) .countrySelect::after {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.ant-theme-dark) .inputGroup:focus-within,
+:global([data-theme="dark"]) .inputGroup:focus-within {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
 
 /* ─────────────────────────────────────────────────────────────

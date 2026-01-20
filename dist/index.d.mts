@@ -121,6 +121,14 @@ interface CountryPhoneInputProps {
     popupRender?: SelectProps['popupRender'];
     /** Container for dropdown portal (same as AntD Select) */
     getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+    /** Control dropdown visibility programmatically */
+    open?: boolean;
+    /** Callback when dropdown visibility changes */
+    onDropdownVisibleChange?: (open: boolean) => void;
+    /** Whether popup width matches select width (default: false) */
+    popupMatchSelectWidth?: boolean | number;
+    /** Custom class name for the dropdown popup */
+    popupClassName?: string;
     /** Use SVG flags (true) or emoji/PNG fallback (false) */
     useSVG?: boolean;
     /** Base URL for flag images when useSVG is true */

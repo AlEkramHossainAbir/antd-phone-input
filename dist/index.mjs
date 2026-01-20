@@ -672,6 +672,33 @@ function usePhoneInput(options) {
       if (disabled || readOnly) return;
       const newValue = e.target.value;
       const protectedLength = getProtectedPrefixLength(state.country.dialCode);
+      const isAutofill = newValue.startsWith("+") && !newValue.startsWith(`+${state.country.dialCode}`);
+      if (isAutofill) {
+        const guessedCountry = guessCountryFromPhone(newValue);
+        if (guessedCountry) {
+          const countryInList = filteredCountries.find(
+            (c) => c.iso2.toUpperCase() === guessedCountry.iso2.toUpperCase()
+          );
+          if (countryInList) {
+            const digitsOnly = newValue.replace(/\D/g, "");
+            const phoneDigits = digitsOnly.slice(countryInList.dialCode.length);
+            const maxLength2 = getMaxPhoneLength(countryInList);
+            const trimmedDigits = maxLength2 > 0 ? phoneDigits.slice(0, maxLength2) : phoneDigits;
+            const newInputValue = buildInputValue(countryInList, trimmedDigits);
+            isInternalChangeRef.current = true;
+            setState((prev) => __spreadProps(__spreadValues({}, prev), {
+              country: countryInList,
+              inputValue: newInputValue,
+              cursorPosition: newInputValue.length
+            }));
+            previousValueRef.current = newInputValue;
+            onCountryChange == null ? void 0 : onCountryChange(countryInList);
+            const phoneValue2 = buildPhoneValue(newInputValue, countryInList);
+            onChange == null ? void 0 : onChange(phoneValue2);
+            return;
+          }
+        }
+      }
       let normalizedValue = normalizeInputValue(
         newValue,
         state.country,
@@ -701,7 +728,7 @@ function usePhoneInput(options) {
       const phoneValue = buildPhoneValue(normalizedValue, state.country);
       onChange == null ? void 0 : onChange(phoneValue);
     },
-    [disabled, readOnly, state.country, onChange]
+    [disabled, readOnly, state.country, filteredCountries, onChange, onCountryChange]
   );
   const handleKeyDown = useCallback(
     (e) => {
@@ -928,6 +955,10 @@ var CountryPhoneInput = forwardRef(
       disableDropdown = false,
       popupRender,
       getPopupContainer,
+      open,
+      onDropdownVisibleChange,
+      popupMatchSelectWidth = 280,
+      popupClassName,
       // Display config
       useSVG = true,
       flagUrl,
@@ -1089,7 +1120,10 @@ var CountryPhoneInput = forwardRef(
           status,
           popupRender: popupRender || customDropdownRender,
           getPopupContainer,
-          popupMatchSelectWidth: 280,
+          popupMatchSelectWidth,
+          popupClassName,
+          open,
+          onDropdownVisibleChange,
           labelRender: () => /* @__PURE__ */ jsx(
             SelectedCountry,
             {
@@ -1117,7 +1151,8 @@ var CountryPhoneInput = forwardRef(
           readOnly,
           size,
           variant,
-          status
+          status,
+          autoComplete: "tel"
         })
       )
     ] }) });

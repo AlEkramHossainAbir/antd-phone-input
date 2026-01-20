@@ -150,6 +150,10 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
       disableDropdown = false,
       popupRender,
       getPopupContainer,
+      open,
+      onDropdownVisibleChange,
+      popupMatchSelectWidth = 280,
+      popupClassName,
 
       // Display config
       useSVG = true,
@@ -261,7 +265,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
       (menu: React.ReactElement) => (
         <>
           {enableSearch && (
-            <div style={{ padding: '8px' }}>
+            <div className='search-input-wrapper'>
               <Input
                 placeholder={searchPlaceholder}
                 value={searchQuery}
@@ -282,6 +286,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
                     <path d="m21 21-4.35-4.35" />
                   </svg>
                 )}
+                className='search-input-field'
                 style={{ marginBottom: '8px' }}
                 allowClear
               />
@@ -339,8 +344,8 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
           {/* Country Select */}
           <Select
             {...selectProps}
-            className={`${styles.countrySelect} ${selectClassName || ''}`}
             value={state.country.iso2}
+            className={`${styles.countrySelect} ${selectClassName || ''}`}
             onChange={onSelectChange}
             options={selectOptions}
             showSearch={false}
@@ -352,7 +357,10 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
             status={status}
             popupRender={popupRender || customDropdownRender}
             getPopupContainer={getPopupContainer}
-            popupMatchSelectWidth={280}
+            popupMatchSelectWidth={popupMatchSelectWidth}
+            popupClassName={popupClassName}
+            open={open}
+            onDropdownVisibleChange={onDropdownVisibleChange}
             labelRender={() => (
               <SelectedCountry
                 country={state.country}
@@ -380,6 +388,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
             size={size}
             variant={variant}
             status={status}
+            autoComplete="tel"
           />
         </Space.Compact>
       </div>

@@ -150,6 +150,10 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
       disableDropdown = false,
       popupRender,
       getPopupContainer,
+      open,
+      onDropdownVisibleChange,
+      popupMatchSelectWidth = 280,
+      popupClassName,
 
       // Display config
       useSVG = true,
@@ -352,7 +356,10 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
             status={status}
             popupRender={popupRender || customDropdownRender}
             getPopupContainer={getPopupContainer}
-            popupMatchSelectWidth={280}
+            popupMatchSelectWidth={popupMatchSelectWidth}
+            popupClassName={popupClassName}
+            open={open}
+            onDropdownVisibleChange={onDropdownVisibleChange}
             labelRender={() => (
               <SelectedCountry
                 country={state.country}
@@ -380,6 +387,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
             size={size}
             variant={variant}
             status={status}
+            autoComplete="tel"
           />
         </Space.Compact>
       </div>

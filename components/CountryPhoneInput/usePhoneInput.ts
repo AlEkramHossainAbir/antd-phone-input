@@ -23,6 +23,7 @@ import {
   buildPhoneValue,
   getFilteredCountries,
   getMaxPhoneLength,
+  guessCountryFromPhone,
 } from './utils';
 
 interface UsePhoneInputOptions {
@@ -203,7 +204,7 @@ export function usePhoneInput(options: UsePhoneInputOptions) {
     ]
   );
 
-  // Handle input change with phone length validation
+  // Handle input change with phone length validation and autofill detection
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (disabled || readOnly) return;
@@ -211,6 +212,53 @@ export function usePhoneInput(options: UsePhoneInputOptions) {
       const newValue = e.target.value;
       const protectedLength = getProtectedPrefixLength(state.country.dialCode);
 
+      // Detect browser autofill: value starts with + and contains a different dial code
+      // This indicates the browser autofilled a full international phone number
+      const isAutofill = newValue.startsWith('+') && 
+        !newValue.startsWith(`+${state.country.dialCode}`);
+
+      if (isAutofill) {
+        // Parse the autofilled phone number and detect country
+        const guessedCountry = guessCountryFromPhone(newValue);
+        
+        if (guessedCountry) {
+          // Check if the guessed country is in our filtered list
+          const countryInList = filteredCountries.find(
+            (c) => c.iso2.toUpperCase() === guessedCountry.iso2.toUpperCase()
+          );
+          
+          if (countryInList) {
+            // Extract phone digits after the dial code
+            const digitsOnly = newValue.replace(/\D/g, '');
+            const phoneDigits = digitsOnly.slice(countryInList.dialCode.length);
+            
+            // Apply max length for the new country
+            const maxLength = getMaxPhoneLength(countryInList);
+            const trimmedDigits = maxLength > 0 ? phoneDigits.slice(0, maxLength) : phoneDigits;
+            const newInputValue = buildInputValue(countryInList, trimmedDigits);
+
+            isInternalChangeRef.current = true;
+
+            setState((prev) => ({
+              ...prev,
+              country: countryInList,
+              inputValue: newInputValue,
+              cursorPosition: newInputValue.length,
+            }));
+
+            previousValueRef.current = newInputValue;
+
+            // Trigger callbacks
+            onCountryChange?.(countryInList);
+
+            const phoneValue = buildPhoneValue(newInputValue, countryInList);
+            onChange?.(phoneValue);
+            return;
+          }
+        }
+      }
+
+      // Normal input handling (non-autofill case)
       // Normalize the value to ensure dial code protection
       let normalizedValue = normalizeInputValue(
         newValue,
@@ -255,7 +303,7 @@ export function usePhoneInput(options: UsePhoneInputOptions) {
       const phoneValue = buildPhoneValue(normalizedValue, state.country);
       onChange?.(phoneValue);
     },
-    [disabled, readOnly, state.country, onChange]
+    [disabled, readOnly, state.country, filteredCountries, onChange, onCountryChange]
   );
 
   // Handle keydown for protection logic

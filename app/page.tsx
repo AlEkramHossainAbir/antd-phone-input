@@ -14,11 +14,55 @@ import {
   ConfigProvider,
   theme,
   Tag,
+  Collapse,
 } from 'antd';
+import { CodeOutlined } from '@ant-design/icons';
 import { CountryPhoneInput } from '@/components/CountryPhoneInput';
 import type { CountryPhoneInputRef, PhoneValue } from '@/components/CountryPhoneInput';
 
 const { Title, Text, Paragraph } = Typography;
+
+/**
+ * Expandable code snippet component
+ */
+const CodeBlock: React.FC<{ code: string; title?: string }> = ({ 
+  code, 
+  title = 'View Code' 
+}) => {
+  return (
+    <Collapse
+      ghost
+      size="small"
+      items={[
+        {
+          key: '1',
+          label: (
+            <Space size={4}>
+              <CodeOutlined />
+              <span>{title}</span>
+            </Space>
+          ),
+          children: (
+            <pre
+              style={{
+                margin: 0,
+                padding: 12,
+                background: '#1a1a1a',
+                borderRadius: 6,
+                overflow: 'auto',
+                fontSize: 12,
+                lineHeight: 1.5,
+              }}
+            >
+              <code style={{ color: '#e6e6e6' }}>{code}</code>
+            </pre>
+          ),
+        },
+      ]}
+      style={{ marginTop: 12 }}
+    />
+  );
+};
 
 export default function Home() {
   // Demo state
@@ -30,6 +74,7 @@ export default function Home() {
   const [size, setSize] = useState<'small' | 'middle' | 'large'>('middle');
   const [status, setStatus] = useState<'error' | 'warning' | undefined>(undefined);
   const [darkMode, setDarkMode] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // Ref for imperative methods
   const phoneInputRef = useRef<CountryPhoneInputRef>(null);
@@ -121,6 +166,14 @@ export default function Home() {
                     </Space>
                   </div>
                 )}
+
+                <CodeBlock code={`import { CountryPhoneInput } from 'antd-country-phone-picker';
+
+<CountryPhoneInput
+  defaultCountry="US"
+  onChange={(value) => console.log(value)}
+  placeholder="Enter phone number"
+/>`} />
               </Space>
             </Card>
 
@@ -134,6 +187,11 @@ export default function Home() {
                 preferredCountries={['US', 'GB', 'CA', 'AU', 'DE', 'FR']}
                 placeholder="Phone number"
               />
+              <CodeBlock code={`<CountryPhoneInput
+  defaultCountry="GB"
+  preferredCountries={['US', 'GB', 'CA', 'AU', 'DE', 'FR']}
+  placeholder="Phone number"
+/>`} />
             </Card>
 
             {/* Country Filtering */}
@@ -146,6 +204,11 @@ export default function Home() {
                 onlyCountries={['US', 'CA', 'MX']}
                 placeholder="North America only"
               />
+              <CodeBlock code={`<CountryPhoneInput
+  defaultCountry="US"
+  onlyCountries={['US', 'CA', 'MX']}
+  placeholder="North America only"
+/>`} />
             </Card>
 
             {/* Exclude Countries */}
@@ -158,6 +221,11 @@ export default function Home() {
                 excludeCountries={['RU', 'CN', 'KP']}
                 placeholder="Some countries excluded"
               />
+              <CodeBlock code={`<CountryPhoneInput
+  defaultCountry="GB"
+  excludeCountries={['RU', 'CN', 'KP']}
+  placeholder="Some countries excluded"
+/>`} />
             </Card>
 
             {/* Form Integration */}
@@ -191,6 +259,29 @@ export default function Home() {
                   </Button>
                 </Form.Item>
               </Form>
+              <CodeBlock code={`<Form form={form} onFinish={handleSubmit}>
+  <Form.Item
+    name="phone"
+    label="Phone Number"
+    rules={[{
+      validator: (_, value) => {
+        if (!value?.phoneNumber) {
+          return Promise.reject('Please enter a phone number');
+        }
+        if (!value.isValid) {
+          return Promise.reject('Please enter a valid phone number');
+        }
+        return Promise.resolve();
+      },
+    }]}
+  >
+    <CountryPhoneInput
+      defaultCountry="BD"
+      preferredCountries={['BD', 'US', 'GB']}
+    />
+  </Form.Item>
+  <Button type="primary" htmlType="submit">Submit</Button>
+</Form>`} />
             </Card>
 
             {/* Interactive Options */}
@@ -282,6 +373,16 @@ export default function Home() {
                   </Button>
                 </Space>
               </Space>
+              <CodeBlock code={`const phoneRef = useRef<CountryPhoneInputRef>(null);
+
+<CountryPhoneInput ref={phoneRef} defaultCountry="JP" />
+
+// Imperative methods
+phoneRef.current?.focus();
+phoneRef.current?.blur();
+phoneRef.current?.clear();
+phoneRef.current?.setCountry('FR');
+const value = phoneRef.current?.getValue();`} />
             </Card>
 
             {/* Distinct Dial Codes */}
@@ -294,6 +395,11 @@ export default function Home() {
                 distinct
                 preferredCountries={['US', 'GB', 'DE']}
               />
+              <CodeBlock code={`<CountryPhoneInput
+  defaultCountry="US"
+  distinct
+  preferredCountries={['US', 'GB', 'DE']}
+/>`} />
             </Card>
 
             {/* Custom Container */}
@@ -312,6 +418,42 @@ export default function Home() {
                   document.getElementById('custom-container') || document.body
                 }
               />
+              <CodeBlock code={`<CountryPhoneInput
+  defaultCountry="AU"
+  getPopupContainer={() =>
+    document.getElementById('container') || document.body
+  }
+/>`} />
+            </Card>
+
+            {/* Controlled Dropdown */}
+            <Card title="Controlled Dropdown (open prop)" size="small">
+              <Paragraph type="secondary" style={{ marginBottom: 16 }}>
+                Control dropdown visibility programmatically with the open prop.
+              </Paragraph>
+              <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <Space>
+                  <Button onClick={() => setDropdownOpen(true)}>Open Dropdown</Button>
+                  <Button onClick={() => setDropdownOpen(false)}>Close Dropdown</Button>
+                  <Text type="secondary">Current: {dropdownOpen ? 'Open' : 'Closed'}</Text>
+                </Space>
+                <CountryPhoneInput
+                  defaultCountry="DE"
+                  open={dropdownOpen}
+                  onDropdownVisibleChange={setDropdownOpen}
+                />
+              </Space>
+              <CodeBlock code={`const [open, setOpen] = useState(false);
+
+<CountryPhoneInput
+  defaultCountry="DE"
+  open={open}
+  onDropdownVisibleChange={setOpen}
+/>
+
+// Programmatically control dropdown
+<Button onClick={() => setOpen(true)}>Open</Button>
+<Button onClick={() => setOpen(false)}>Close</Button>`} />
             </Card>
 
             {/* Different Sizes Comparison */}

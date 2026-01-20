@@ -22,6 +22,9 @@ A production-ready, fully-typed phone input component for **Ant Design v5+**. De
 - ♿ **Accessible** – Keyboard navigation and screen reader friendly
 - 🌙 **Dark Mode Ready** – Automatic dark theme support
 - 📱 **SSR Safe** – Works with Next.js, Vite, CRA, and other SSR frameworks
+- 📝 **Browser Autofill Support** – Automatically detects and parses autofilled phone numbers
+- 🔗 **Unified Visual Design** – Seamless merged input appearance
+- 🎛️ **Controlled Dropdown** – Programmatically control dropdown visibility with `open` prop
 
 ---
 
@@ -263,6 +266,10 @@ Remove specific countries from the list:
 | `disableDropdown` | `boolean` | `false` | **Completely disable** the country dropdown. Phone input remains functional but country cannot be changed. |
 | `popupRender` | `SelectProps['popupRender']` | Built-in render | Custom render function for the dropdown menu. Receives the default menu as a parameter. |
 | `getPopupContainer` | `(triggerNode: HTMLElement) => HTMLElement` | `undefined` | **Container** element for the dropdown portal. Essential for modals/scrollable containers. Default behavior attaches to document body. |
+| `open` | `boolean` | `undefined` | **Controlled dropdown visibility**. When set, takes control of dropdown open/close state. |
+| `onDropdownVisibleChange` | `(open: boolean) => void` | `undefined` | Callback when dropdown visibility changes. Use with `open` for controlled mode. |
+| `popupMatchSelectWidth` | `boolean \| number` | `280` | Whether the dropdown width matches the select width. Set `true` to match, `false` for auto-width, or a specific number (in pixels). |
+| `popupClassName` | `string` | `undefined` | Custom CSS class name for the dropdown popup container. |
 
 ### Display Configuration Props
 
@@ -437,6 +444,46 @@ import { Modal } from 'antd';
 ```
 
 **Why?** By default, Ant Design dropdowns attach to `document.body`. In modals or scrollable areas, this can cause positioning issues. The `getPopupContainer` prop tells the dropdown where to render.
+
+### Controlled Dropdown Visibility
+
+Use the `open` prop to programmatically control when the dropdown is open or closed:
+
+```tsx
+import { useState } from 'react';
+
+function ControlledDropdownExample() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setDropdownOpen(true)}>Open Dropdown</button>
+      <button onClick={() => setDropdownOpen(false)}>Close Dropdown</button>
+      
+      <CountryPhoneInput
+        defaultCountry="US"
+        open={dropdownOpen}
+        onDropdownVisibleChange={setDropdownOpen}
+      />
+    </div>
+  );
+}
+```
+
+### Popup Width Configuration
+
+Control the dropdown width with `popupMatchSelectWidth`:
+
+```tsx
+// Dropdown width matches select trigger width
+<CountryPhoneInput popupMatchSelectWidth={true} />
+
+// Fixed width dropdown (280px is default)
+<CountryPhoneInput popupMatchSelectWidth={280} />
+
+// Auto-width based on content
+<CountryPhoneInput popupMatchSelectWidth={false} />
+```
 
 ### Select and Input Prop Passthrough
 
