@@ -53,11 +53,13 @@ Ensure you have these installed:
 }
 ```
 
-**Important:** You must import Ant Design's CSS in your project. The component's internal styles are automatically included.
+**Important:** You must import Ant Design's CSS in your project. The component's CSS is automatically included when you import the component.
 
 ```tsx
 // In your main entry file (e.g., App.tsx or index.tsx)
 import 'antd/dist/reset.css'; // Ant Design v5
+import 'antd-country-phone-picker/dist/index.css'; // Component CSS (THIS WAS MISSING!)
+// Component styles are automatically included - no separate import needed!
 ```
 
 ---
@@ -226,7 +228,6 @@ Remove specific countries from the list:
   style={{ maxWidth: 400 }}
   size="large"
   variant="filled"
-  grouped={true}
 />
 ```
 
@@ -268,7 +269,7 @@ Remove specific countries from the list:
 | `popupRender` | `SelectProps['popupRender']` | Built-in render | Custom render function for the dropdown menu. Receives the default menu as a parameter. |
 | `getPopupContainer` | `(triggerNode: HTMLElement) => HTMLElement` | `undefined` | **Container** element for the dropdown portal. Essential for modals/scrollable containers. Default behavior attaches to document body. |
 | `open` | `boolean` | `undefined` | **Controlled dropdown visibility**. When set, takes control of dropdown open/close state. |
-| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback when dropdown visibility changes. Use with `open` for controlled mode. |
+| `onDropdownVisibleChange` | `(open: boolean) => void` | `undefined` | Callback when dropdown visibility changes. Use with `open` for controlled mode. |
 | `popupMatchSelectWidth` | `boolean \| number` | `280` | Whether the dropdown width matches the select width. Set `true` to match, `false` for auto-width, or a specific number (in pixels). |
 | `popupClassName` | `string` | `undefined` | Custom CSS class name for the dropdown popup container. |
 
@@ -278,23 +279,6 @@ Remove specific countries from the list:
 |------|------|---------|-------------|
 | `useSVG` | `boolean` | `true` | Use **SVG flags**. If `false`, falls back to PNG/emoji flags. SVG provides better quality and smaller size. |
 | `flagUrl` | `string` | `undefined` | **Custom CDN URL** for flag images. Overrides default flag source. Must include trailing path structure. |
-| `grouped` | `boolean` | `false` | **Visual grouping mode**. When `true`, the select and input fields appear unified by removing the border between them for a seamless look. |
-
-### Grouped Visual Mode
-
-Control the visual appearance of the input group:
-
-```tsx
-// Default (non-grouped) - separate select and input with visible border
-<CountryPhoneInput defaultCountry="US" />
-
-// Grouped mode - unified appearance with no border between select and input
-<CountryPhoneInput defaultCountry="US" grouped={true} />
-```
-
-**When to use:**
-- `grouped={false}` (default): Clear separation between country selector and phone input
-- `grouped={true}`: Seamless, unified appearance for a more compact design
 
 ### Styling Props
 
@@ -481,7 +465,7 @@ function ControlledDropdownExample() {
       <CountryPhoneInput
         defaultCountry="US"
         open={dropdownOpen}
-        onOpenChange={setDropdownOpen}
+        onDropdownVisibleChange={setDropdownOpen}
       />
     </div>
   );
@@ -545,14 +529,16 @@ Pass additional props to the underlying Ant Design `Input` component:
 
 ### Ant Design CSS Requirement
 
-**The component requires Ant Design's CSS to be imported in your project.** The component's internal styles are automatically bundled and injected, so you don't need to import them separately.
+**The component requires Ant Design's CSS to be imported in your project.** The component's internal styles are automatically bundled and injected when you import the component.
 
 ```tsx
 // In your main entry file (e.g., main.tsx, App.tsx, or _app.tsx)
-import 'antd/dist/reset.css'; // Ant Design v5
+import 'antd/dist/reset.css'; // Ant Design v5 (required)
 
-// Component styles are automatically included - no additional import needed
+// Component styles are automatically included - no additional import needed!
 ```
+
+**How it works:** When you import `CountryPhoneInput`, the CSS is automatically injected into your app. This includes support for all features like the `grouped` prop, themes, and responsive styles.
 
 ### Using with Ant Design Theme
 
@@ -860,13 +846,25 @@ console.log(results); // [United States, United Kingdom, ...]
 </Modal>
 ```
 
-### Issue: Styles not applied
+### Issue: Styles not applied / grouped prop not working
 
 **Solution:** Make sure you've imported Ant Design's CSS:
 
 ```tsx
 import 'antd/dist/reset.css';
 ```
+
+Component styles are automatically included. If styles still don't work:
+
+1. **Clear your build cache** and reinstall:
+   ```bash
+   rm -rf node_modules/.cache
+   npm install
+   ```
+
+2. **Restart your dev server**
+
+3. **Check for CSS conflicts** with global styles or other libraries
 
 ### Issue: TypeScript errors
 

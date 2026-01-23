@@ -964,7 +964,7 @@ var CountryPhoneInput = React.forwardRef(
       popupRender,
       getPopupContainer,
       open,
-      onDropdownVisibleChange,
+      onOpenChange,
       popupMatchSelectWidth = 280,
       popupClassName,
       // Display config
@@ -977,6 +977,7 @@ var CountryPhoneInput = React.forwardRef(
       className,
       selectClassName,
       inputClassName,
+      grouped = false,
       style,
       size = "middle",
       disabled = false,
@@ -1111,11 +1112,16 @@ var CountryPhoneInput = React.forwardRef(
         className
       ].filter(Boolean).join(" ");
     }, [sizeClass, disabled, readOnly, status, className]);
-    return /* @__PURE__ */ jsxRuntime.jsx("div", { className: wrapperClassName, style, children: /* @__PURE__ */ jsxRuntime.jsxs(antd.Space.Compact, { block: true, className: CountryPhoneInput_default.inputGroup, children: [
+    return /* @__PURE__ */ jsxRuntime.jsx("div", { className: wrapperClassName, style, children: /* @__PURE__ */ jsxRuntime.jsxs(antd.Space.Compact, { block: true, className: grouped ? CountryPhoneInput_default.inputGroup : void 0, children: [
       /* @__PURE__ */ jsxRuntime.jsx(
         antd.Select,
         __spreadProps(__spreadValues({}, selectProps), {
-          className: `${CountryPhoneInput_default.countrySelect} ${selectClassName || ""}`,
+          classNames: {
+            root: `${CountryPhoneInput_default.countrySelect} ${selectClassName || ""}`,
+            popup: {
+              root: popupClassName
+            }
+          },
           value: state.country.iso2,
           onChange: onSelectChange,
           options: selectOptions,
@@ -1129,9 +1135,8 @@ var CountryPhoneInput = React.forwardRef(
           popupRender: popupRender || customDropdownRender,
           getPopupContainer,
           popupMatchSelectWidth,
-          popupClassName,
           open,
-          onDropdownVisibleChange,
+          onOpenChange,
           labelRender: () => /* @__PURE__ */ jsxRuntime.jsx(
             SelectedCountry,
             {

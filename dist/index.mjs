@@ -956,7 +956,7 @@ var CountryPhoneInput = forwardRef(
       popupRender,
       getPopupContainer,
       open,
-      onDropdownVisibleChange,
+      onOpenChange,
       popupMatchSelectWidth = 280,
       popupClassName,
       // Display config
@@ -969,6 +969,7 @@ var CountryPhoneInput = forwardRef(
       className,
       selectClassName,
       inputClassName,
+      grouped = false,
       style,
       size = "middle",
       disabled = false,
@@ -1103,11 +1104,16 @@ var CountryPhoneInput = forwardRef(
         className
       ].filter(Boolean).join(" ");
     }, [sizeClass, disabled, readOnly, status, className]);
-    return /* @__PURE__ */ jsx("div", { className: wrapperClassName, style, children: /* @__PURE__ */ jsxs(Space.Compact, { block: true, className: CountryPhoneInput_default.inputGroup, children: [
+    return /* @__PURE__ */ jsx("div", { className: wrapperClassName, style, children: /* @__PURE__ */ jsxs(Space.Compact, { block: true, className: grouped ? CountryPhoneInput_default.inputGroup : void 0, children: [
       /* @__PURE__ */ jsx(
         Select,
         __spreadProps(__spreadValues({}, selectProps), {
-          className: `${CountryPhoneInput_default.countrySelect} ${selectClassName || ""}`,
+          classNames: {
+            root: `${CountryPhoneInput_default.countrySelect} ${selectClassName || ""}`,
+            popup: {
+              root: popupClassName
+            }
+          },
           value: state.country.iso2,
           onChange: onSelectChange,
           options: selectOptions,
@@ -1121,9 +1127,8 @@ var CountryPhoneInput = forwardRef(
           popupRender: popupRender || customDropdownRender,
           getPopupContainer,
           popupMatchSelectWidth,
-          popupClassName,
           open,
-          onDropdownVisibleChange,
+          onOpenChange,
           labelRender: () => /* @__PURE__ */ jsx(
             SelectedCountry,
             {

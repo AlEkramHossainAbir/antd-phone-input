@@ -124,7 +124,7 @@ interface CountryPhoneInputProps {
     /** Control dropdown visibility programmatically */
     open?: boolean;
     /** Callback when dropdown visibility changes */
-    onDropdownVisibleChange?: (open: boolean) => void;
+    onOpenChange?: (open: boolean) => void;
     /** Whether popup width matches select width (default: false) */
     popupMatchSelectWidth?: boolean | number;
     /** Custom class name for the dropdown popup */
@@ -149,6 +149,8 @@ interface CountryPhoneInputProps {
     selectClassName?: string;
     /** Additional class name for the input */
     inputClassName?: string;
+    /** Additional class name for the input group container (Space.Compact) */
+    grouped?: boolean;
     /** Inline styles for the wrapper */
     style?: React.CSSProperties;
     /** Size of the input (matches AntD sizes) */
