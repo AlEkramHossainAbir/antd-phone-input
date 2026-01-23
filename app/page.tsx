@@ -181,7 +181,6 @@ export default function Home() {
               <Space direction="vertical" style={{ width: '100%' }} size="middle">
                 <CountryPhoneInput
                   defaultCountry="BD"
-                  onChange={handleChange}
                   placeholder="Enter phone number"
                   grouped={true}
                 />
@@ -192,7 +191,6 @@ export default function Home() {
 
 <CountryPhoneInput
   defaultCountry="US"
-  onChange={handleChange}
   placeholder="Enter phone number"
   grouped={true}
 />`} />
