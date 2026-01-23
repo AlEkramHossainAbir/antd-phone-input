@@ -267,7 +267,7 @@ Remove specific countries from the list:
 | `popupRender` | `SelectProps['popupRender']` | Built-in render | Custom render function for the dropdown menu. Receives the default menu as a parameter. |
 | `getPopupContainer` | `(triggerNode: HTMLElement) => HTMLElement` | `undefined` | **Container** element for the dropdown portal. Essential for modals/scrollable containers. Default behavior attaches to document body. |
 | `open` | `boolean` | `undefined` | **Controlled dropdown visibility**. When set, takes control of dropdown open/close state. |
-| `onDropdownVisibleChange` | `(open: boolean) => void` | `undefined` | Callback when dropdown visibility changes. Use with `open` for controlled mode. |
+| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback when dropdown visibility changes. Use with `open` for controlled mode. |
 | `popupMatchSelectWidth` | `boolean \| number` | `280` | Whether the dropdown width matches the select width. Set `true` to match, `false` for auto-width, or a specific number (in pixels). |
 | `popupClassName` | `string` | `undefined` | Custom CSS class name for the dropdown popup container. |
 
@@ -463,7 +463,7 @@ function ControlledDropdownExample() {
       <CountryPhoneInput
         defaultCountry="US"
         open={dropdownOpen}
-        onDropdownVisibleChange={setDropdownOpen}
+        onOpenChange={setDropdownOpen}
       />
     </div>
   );

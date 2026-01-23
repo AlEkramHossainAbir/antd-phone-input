@@ -151,7 +151,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
       popupRender,
       getPopupContainer,
       open,
-      onDropdownVisibleChange,
+      onOpenChange,
       popupMatchSelectWidth = 280,
       popupClassName,
 
@@ -343,32 +343,36 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
         <Space.Compact block className={grouped ? styles.inputGroup : undefined}>
           {/* Country Select */}
           <Select
-            {...selectProps}
-            className={`${styles.countrySelect} ${selectClassName || ''}`}
-            value={state.country.iso2}
-            onChange={onSelectChange}
-            options={selectOptions}
-            showSearch={false}
-            optionLabelProp="label"
-            suffixIcon={suffixIcon}
-            disabled={disabled || disableDropdown}
-            size={size}
-            variant={variant}
-            status={status}
-            popupRender={popupRender || customDropdownRender}
-            getPopupContainer={getPopupContainer}
-            popupMatchSelectWidth={popupMatchSelectWidth}
-            popupClassName={popupClassName}
-            open={open}
-            onDropdownVisibleChange={onDropdownVisibleChange}
-            labelRender={() => (
-              <SelectedCountry
-                country={state.country}
-                useSVG={useSVG}
-                flagUrl={flagUrl}
-              />
-            )}
-          />
+          {...selectProps}
+           classNames={{
+            root: `${styles.countrySelect} ${selectClassName || ""}`,
+            popup: {
+              root: popupClassName,
+            },
+          }}
+          value={state.country.iso2}
+          onChange={onSelectChange}
+          options={selectOptions}
+          showSearch={false}
+          optionLabelProp="label"
+          suffixIcon={suffixIcon}
+          disabled={disabled || disableDropdown}
+          size={size}
+          variant={variant}
+          status={status}
+          popupRender={popupRender || customDropdownRender}
+          getPopupContainer={getPopupContainer}
+          popupMatchSelectWidth={popupMatchSelectWidth}
+          open={open}
+          onOpenChange={onOpenChange}
+          labelRender={() => (
+            <SelectedCountry
+              country={state.country}
+              useSVG={useSVG}
+              flagUrl={flagUrl}
+            />
+          )}
+        />
 
           {/* Phone Input */}
           <Input

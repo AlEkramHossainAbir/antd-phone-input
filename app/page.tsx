@@ -462,7 +462,7 @@ const value = phoneRef.current?.getValue();`} />
                 <CountryPhoneInput
                   defaultCountry="DE"
                   open={dropdownOpen}
-                  onDropdownVisibleChange={setDropdownOpen}
+                  onOpenChange={setDropdownOpen}
                 />
               </Space>
               <CodeBlock code={`const [open, setOpen] = useState(false);
@@ -470,7 +470,7 @@ const value = phoneRef.current?.getValue();`} />
 <CountryPhoneInput
   defaultCountry="DE"
   open={open}
-  onDropdownVisibleChange={setOpen}
+  onOpenChange={setOpen}
 />
 
 // Programmatically control dropdown
