@@ -23,18 +23,18 @@
    ───────────────────────────────────────────────────────────── */
 
 .sizeSmall .countrySelect {
-  width: 70px;
-  min-width: 70px;
+  width: 60px;
+  min-width: 60px;
 }
 
 .sizeMiddle .countrySelect {
-  width: 80px;
-  min-width: 80px;
+  width: 60px;
+  min-width: 60px;
 }
 
 .sizeLarge .countrySelect {
-  width: 90px;
-  min-width: 90px;
+  width: 70px;
+  min-width: 70px;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -49,6 +49,10 @@
 .countrySelect :global(.ant-select-selector) {
   padding-left: 8px !important;
   padding-right: 8px !important;
+}
+
+.countrySelect :global(.ant-select-selection-wrap) {
+  width: auto;
 }
 
 .countrySelect :global(.ant-select-selection-item) {
