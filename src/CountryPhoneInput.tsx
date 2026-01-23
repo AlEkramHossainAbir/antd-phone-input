@@ -167,6 +167,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
       className,
       selectClassName,
       inputClassName,
+      grouped = false,
       style,
       size = 'middle',
       disabled = false,
@@ -339,7 +340,7 @@ const CountryPhoneInput = forwardRef<CountryPhoneInputRef, CountryPhoneInputProp
 
     return (
       <div className={wrapperClassName} style={style}>
-        <Space.Compact block className={styles.inputGroup}>
+        <Space.Compact block className={grouped ? styles.inputGroup : undefined}>
           {/* Country Select */}
           <Select
             {...selectProps}

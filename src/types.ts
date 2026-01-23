@@ -190,6 +190,9 @@ export interface CountryPhoneInputProps {
   /** Additional class name for the input */
   inputClassName?: string;
   
+  /** Additional class name for the input group container (Space.Compact) */
+  grouped?: boolean;
+  
   /** Inline styles for the wrapper */
   style?: React.CSSProperties;
   

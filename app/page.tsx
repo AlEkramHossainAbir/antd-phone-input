@@ -17,8 +17,8 @@ import {
   Collapse,
 } from 'antd';
 import { CodeOutlined } from '@ant-design/icons';
-import { CountryPhoneInput } from '@/components/CountryPhoneInput';
-import type { CountryPhoneInputRef, PhoneValue } from '@/components/CountryPhoneInput';
+import {CountryPhoneInput} from '@/src';
+import type { CountryPhoneInputRef, PhoneValue } from '@/src';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -129,7 +129,7 @@ export default function Home() {
             {/* Basic Usage */}
             <Card title="Basic Usage" size="small">
               <Space direction="vertical" style={{ width: '100%' }} size="middle">
-                <CountryPhoneInput
+                 <CountryPhoneInput
                   defaultCountry="US"
                   onChange={handleChange}
                   placeholder="Enter phone number"
@@ -173,6 +173,28 @@ export default function Home() {
   defaultCountry="US"
   onChange={(value) => console.log(value)}
   placeholder="Enter phone number"
+/>`} />
+              </Space>
+            </Card>
+
+            <Card title="Grouped Style" size="small">
+              <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <CountryPhoneInput
+                  defaultCountry="BD"
+                  onChange={handleChange}
+                  placeholder="Enter phone number"
+                  grouped={true}
+                />
+
+                
+
+                <CodeBlock code={`import { CountryPhoneInput } from 'antd-country-phone-picker';
+
+<CountryPhoneInput
+  defaultCountry="US"
+  onChange={handleChange}
+  placeholder="Enter phone number"
+  grouped={true}
 />`} />
               </Space>
             </Card>
@@ -333,7 +355,7 @@ export default function Home() {
               </Space>
 
               <CountryPhoneInput
-                defaultCountry="IN"
+                defaultCountry="BD"
                 enableSearch={enableSearch}
                 enableArrow={enableArrow}
                 disabled={disabled}
